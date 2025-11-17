@@ -1,0 +1,66 @@
+import React from 'react';
+import useAuth from '../../../hooks/useAuth';
+import { useLocation, useNavigate } from 'react-router';
+
+const SocialLogin = () => {
+  const { sigInWIthGoogle } = useAuth();
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleGoogleSignIn = () => {
+    sigInWIthGoogle().then((res) => {
+      console.log(res.user);
+      navigate(location?.pathname || '/')
+    })
+      .catch(e => {
+        console.log(e)
+      });
+  };
+
+  return (
+    <div>
+      <div className="flex items-center gap-4">
+        <div className="h-px bg-gray-300 flex-1"></div>
+        <p className="text-gray-400 text-sm">Or</p>
+        <div className="h-px bg-gray-300 flex-1"></div>
+      </div>
+
+      {/* Google button */}
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn w-full bg-gray-100 text-black border border-gray-300 flex items-center gap-2"
+      >
+        <svg
+          aria-label="Google logo"
+          width="16"
+          height="16"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <g>
+            <path fill="#fff" d="M0 0h512v512H0"></path>
+            <path
+              fill="#34a853"
+              d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+            ></path>
+            <path
+              fill="#4285f4"
+              d="M386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+            ></path>
+            <path
+              fill="#fbbc02"
+              d="M90 341a208 200 0 010-171l63 49q-12 37 0 73"
+            ></path>
+            <path
+              fill="#ea4335"
+              d="M153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+            ></path>
+          </g>
+        </svg>
+        Login with Google
+      </button>
+    </div>
+  );
+};
+
+export default SocialLogin;
