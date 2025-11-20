@@ -6,12 +6,14 @@ const SocialLogin = () => {
   const { sigInWIthGoogle } = useAuth();
   const location = useLocation()
   const navigate = useNavigate()
+  console.log(location)
 
   const handleGoogleSignIn = () => {
-    sigInWIthGoogle().then((res) => {
+    sigInWIthGoogle()
+      .then((res) => {
       console.log(res.user);
-      navigate(location?.pathname || '/')
-    })
+      navigate(location?.state || '/')
+      })
       .catch(e => {
         console.log(e)
       });

@@ -74,7 +74,7 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button className="btn bg-primary w-full text-black mt-2">
+          <button  className="btn bg-primary w-full text-black mt-2">
             Login
           </button>
         </fieldset>
@@ -82,13 +82,13 @@ const Login = () => {
         {/* Switch to Register */}
         <p className="text-gray-500 text-sm text-center">
           Don't have an account?{" "}
-          <Link to="/register" className="text-primary font-medium">
+          <Link state={location.state} to="/register" className="text-primary font-medium">
             Register
           </Link>
         </p>
 
         {/* Divider */}
-       <SocialLogin></SocialLogin>
+       <SocialLogin ></SocialLogin>
       </form>
     </div>
   );

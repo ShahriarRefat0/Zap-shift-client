@@ -5,6 +5,10 @@ import Coverage from "../pages/Coverage/Coverage";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Aurh/Login/Login";
 import Register from "../pages/Aurh/Register/Register";
+import PrivetRoute from "./PrivetRoute";
+import SendParcel from "../pages/SendParcel/SendParcel";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -13,26 +17,51 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Home
+        Component: Home,
       },
       {
-        path: 'coverage',
+        path: "rider",
+        element: <PrivetRoute></PrivetRoute>,
+      },
+      {
+        path: "send-parcel",
+        element: (
+          <PrivetRoute>
+            <SendParcel></SendParcel>
+          </PrivetRoute>
+        ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "coverage",
         Component: Coverage,
-        loader: ()=> fetch('/serviceCenters.json').then(res => res.json())
-      }
-    ]
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+    ],
   },
   {
-    path: '/',
+    path: "/",
     Component: AuthLayout,
     children: [
       {
-        path: '/login',
-        Component: Login
+        path: "/login",
+        Component: Login,
       },
       {
-        path: 'register',
-        Component: Register
+        path: "register",
+        Component: Register,
+      },
+    ],
+  },
+  {
+    path: 'dashboard',
+    element: <PrivetRoute>
+      <DashboardLayout></DashboardLayout>
+    </PrivetRoute>,
+    children: [
+      {
+        path: 'my-parcels',
+        Component: MyParcels
       }
     ]
   }

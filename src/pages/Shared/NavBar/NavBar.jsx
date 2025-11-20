@@ -29,20 +29,30 @@ const NavBar = () => {
         <NavLink>Service</NavLink>
       </li>
       <li>
-        <NavLink to='/coverage'>Coverage</NavLink>
+        <NavLink to="/coverage">Coverage</NavLink>
       </li>
       <li>
         <NavLink>About Us</NavLink>
       </li>
       <li>
-        <NavLink>Pricing</NavLink>
+        <NavLink to="/send-parcel">Send Parcel</NavLink>
       </li>
       <li>
         <NavLink>Be a Rider</NavLink>
       </li>
 
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard/my-parcels">My Parcels</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
+
+  
+
 
   return (
     <div className="navbar rounded-xl bg-base-100 shadow-sm ">
@@ -72,9 +82,9 @@ const NavBar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <div className="btn btn-ghost text-xl">
           <Logo></Logo>
-        </a>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
