@@ -9,6 +9,9 @@ import PrivetRoute from "./PrivetRoute";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import Payment from "../pages/Dashboard/MyParcels/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/MyParcels/Payment/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/MyParcels/Payment/PaymentCancelled";
 
 export const router = createBrowserRouter([
   {
@@ -54,15 +57,29 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: 'dashboard',
-    element: <PrivetRoute>
-      <DashboardLayout></DashboardLayout>
-    </PrivetRoute>,
+    path: "dashboard",
+    element: (
+      <PrivetRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivetRoute>
+    ),
     children: [
       {
-        path: 'my-parcels',
-        Component: MyParcels
+        path: "my-parcels",
+        Component: MyParcels,
+      },
+      {
+        path: "payment/:parcelId",
+        Component: Payment,
+      },
+      {
+        path: 'payment-success',
+        Component: PaymentSuccess
+      },
+      {
+        path: 'payment-cancelled',
+        Component: PaymentCancelled
       }
-    ]
-  }
+    ],
+  },
 ]);

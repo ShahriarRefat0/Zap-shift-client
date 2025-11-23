@@ -1,11 +1,12 @@
 import React from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from '../../hooks/useAuth'
 
 const SendParcel = () => {
+  const navigate = useNavigate()
   const { register, control, handleSubmit,
   //formState: { error }
   } = useForm();
@@ -31,9 +32,10 @@ return district
 
   const handleSendParcel = (data) => {
     console.log(data)
-    const isDocument = data.parcelType = 'document'
+    const isDocument = data.parcelType === 'document'
     const isSameDistrict = data.senderDistrict === data.receiverDistrict;
-const parcelWeight = parseFloat(data.parcelWeight)
+    const parcelWeight = Number(data.parcelWeight)
+    
 
     let cost = 0;
     if (isDocument) {
@@ -48,6 +50,9 @@ const parcelWeight = parseFloat(data.parcelWeight)
         cost = minCharge + extraCharge
 }
     }
+
+    data.cost = cost ; 
+      
    Swal.fire({
      title: "Agree with the cost",
      text: `You will be charged ${cost}`,
@@ -55,19 +60,25 @@ const parcelWeight = parseFloat(data.parcelWeight)
      showCancelButton: true,
      confirmButtonColor: "#3085d6",
      cancelButtonColor: "#d33",
-     confirmButtonText: "I agree",
+     confirmButtonText: "Confirm and continue payment",
    }).then((result) => {
      if (result.isConfirmed) {
        
        axiosSecure.post('/parcels', data)
          .then(res => {
-           console.log('after saving parcel', res.data)
+           //console.log('after saving parcel', res.data)
+           if (res.data.insertedId) {
+             navigate('/dashboard/my-parcels')
+             Swal.fire({
+               position: "top-end",
+               icon: "success",
+               title: "Parcel has been create. Please pay",
+               showConfirmButton: false,
+               timer: 2500,
+             });
+           }
          });
-      //  Swal.fire({
-      //    title: "Deleted!",
-      //    text: "Your file has been deleted.",
-      //    icon: "success",
-      //  });
+
      }
    });
     
