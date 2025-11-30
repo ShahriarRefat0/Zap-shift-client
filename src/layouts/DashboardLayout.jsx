@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import { AiFillProduct } from "react-icons/ai";
-
+import { FaRegCreditCard } from "react-icons/fa";
+import { RiMotorbikeFill } from 'react-icons/ri';
+import { MdManageAccounts } from "react-icons/md";
 
 const DashboardLayout = () => {
   return (
@@ -36,7 +38,6 @@ const DashboardLayout = () => {
           </nav>
           {/* Page content here */}
           <Outlet></Outlet>
-         
         </div>
 
         <div className="drawer-side is-drawer-close:overflow-visible">
@@ -82,6 +83,36 @@ const DashboardLayout = () => {
                 >
                   <AiFillProduct />
                   <span className="is-drawer-close:hidden">My Parcels</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Payment History"
+                  to={"/dashboard/payment-history"}
+                >
+                  <FaRegCreditCard />
+                  <span className="is-drawer-close:hidden">History</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Approve Riders"
+                  to={"/dashboard/approve-riders"}
+                >
+                  <RiMotorbikeFill />
+                  <span className="is-drawer-close:hidden">Approve Riders</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Users Management"
+                  to={"/dashboard/users-management"}
+                >
+                  <MdManageAccounts />
+                  <span className="is-drawer-close:hidden">Users Management</span>
                 </NavLink>
               </li>
               {/* List item */}

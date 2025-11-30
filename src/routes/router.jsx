@@ -12,6 +12,9 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import Payment from "../pages/Dashboard/MyParcels/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/MyParcels/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/MyParcels/Payment/PaymentCancelled";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import Rider from "../pages/Rider/Rider";
+import ApproveRiders from "../pages/Dashboard/ApproveRiders/ApproveRiders";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +27,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "rider",
-        element: <PrivetRoute></PrivetRoute>,
+        element: (
+          <PrivetRoute>
+            <Rider></Rider>
+          </PrivetRoute>
+        ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
       },
       {
         path: "send-parcel",
@@ -73,13 +81,21 @@ export const router = createBrowserRouter([
         Component: Payment,
       },
       {
-        path: 'payment-success',
-        Component: PaymentSuccess
+        path: "payment-history",
+        Component: PaymentHistory,
       },
       {
-        path: 'payment-cancelled',
-        Component: PaymentCancelled
-      }
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancelled,
+      },
+      {
+        path: "approve-riders",
+        Component: ApproveRiders,
+      },
     ],
   },
 ]);

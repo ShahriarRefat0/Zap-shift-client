@@ -4,10 +4,12 @@ import useAuth from '../../../hooks/useAuth';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import axios from 'axios';
+import useAxiosSecure from '../../../hooks/useAxiosSecure';
 
 const Register = () => {
   const location = useLocation()
   const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure() 
 const {
   register,
   handleSubmit,
@@ -17,12 +19,10 @@ const {
   const {   registerUser, updateUserProfile} = useAuth()
 
   const handleRegister = (data) => {
-    console.log(data)
     const profileImg = data.photo[0]
 
     registerUser(data.email, data.password)
-      .then(res => {
-        //console.log(res.user)
+      .then(() => {
         //1. store the img in form data
         const formData = new FormData()
         formData.append('image', profileImg)
@@ -31,18 +31,30 @@ const {
 
         axios.post(image_API_URL, formData)
           .then(res => {
-            console.log('after image upload', res.data.data.url)
+            const photoURL = res.data.data.url
             
             const userProfile = {
               displayName: data.name,
-              photoURL: res.data.data.url
+              photoURL: photoURL
             }
 
+            //create user in database
+            const userInfo = {
+              email: data.email,
+              name: data.name, 
+              photoURL: photoURL
+            }
+            axiosSecure.post('/users', userInfo)
+              .then(res => {
+              if (res.data.insertedId) {
+                console.log('user created in data base')
+              }
+            })
             //update user profile to  firebase
             updateUserProfile(userProfile)
               .then(() => {
-                console.log("user profile updated");
-                navigate;(location.state || '/')
+                console.log("user profile updated one");
+                navigate(location.state || '/')
               })
               .catch((e) => {
                 console.log(e);
