@@ -53,8 +53,9 @@ const ApproveRiders = () => {
               <th>No</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Status</th>
               <th>District</th>
+              <th>Application Status</th>
+              <th>Work Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -66,6 +67,7 @@ const ApproveRiders = () => {
                 <td>{rider.riderEmail}</td>
                 <td>{rider.riderDistrict}</td>
                 <td><p className={` badge badge-outline   ${rider.status === 'approved' ? 'badge-success' : rider.status === 'rejected' ? " badge-error" : 'badge-warning '}`}> {rider.status}</p></td>
+                <td>{rider.workStatus}</td>
                 <td>
                   <button onClick={() => handleApproval(rider)} className="btn">
                     <IoMdEye />

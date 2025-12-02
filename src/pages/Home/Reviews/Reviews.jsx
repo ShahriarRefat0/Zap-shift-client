@@ -6,7 +6,7 @@ import ReviewCard from './ReviewCard';
 const Reviews = ({ reviewsPromise }) => {
 
   const reviews = use(reviewsPromise);
-  console.log(reviews)
+
   return (
     <div className="">
       <div className="text-center my-15">
