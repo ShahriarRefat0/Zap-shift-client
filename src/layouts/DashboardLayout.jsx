@@ -1,11 +1,16 @@
 import React from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
 import { AiFillProduct } from "react-icons/ai";
-import { FaRegCreditCard } from "react-icons/fa";
+import { FaRegCreditCard, FaTasks } from "react-icons/fa";
 import { RiMotorbikeFill } from 'react-icons/ri';
 import { MdManageAccounts } from "react-icons/md";
+import useRole from '../hooks/useRole';
+import { PiPersonSimpleBikeBold } from "react-icons/pi";
+import { SiGoogletasks } from "react-icons/si";
 
 const DashboardLayout = () => {
+  const { role } = useRole();
+
   return (
     <div>
       <div className="drawer lg:drawer-open max-w-7xl mx-auto">
@@ -95,26 +100,67 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">History</span>
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Approve Riders"
-                  to={"/dashboard/approve-riders"}
-                >
-                  <RiMotorbikeFill />
-                  <span className="is-drawer-close:hidden">Approve Riders</span>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Users Management"
-                  to={"/dashboard/users-management"}
-                >
-                  <MdManageAccounts />
-                  <span className="is-drawer-close:hidden">Users Management</span>
-                </NavLink>
-              </li>
+              {
+                role === 'rider' &&
+                <>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assign Deliveries"
+                      to={"/dashboard/assign-deliveries"}
+                    >
+                      <FaTasks />
+                      <span className="is-drawer-close:hidden">Assign Deliveries</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Completed Deliveries"
+                      to={"/dashboard/completed-deliveries"}
+                    >
+                      <SiGoogletasks />
+                      <span className="is-drawer-close:hidden">Completed Deliveries</span>
+                    </NavLink>
+                  </li>
+                </>
+              }
+
+              {
+                role === "admin" && <>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Approve Riders"
+                      to={"/dashboard/approve-riders"}
+                    >
+                      <RiMotorbikeFill />
+                      <span className="is-drawer-close:hidden">Approve Riders</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Users Management"
+                      to={"/dashboard/users-management"}
+                    >
+                      <MdManageAccounts />
+                      <span className="is-drawer-close:hidden">Users Management</span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assign Riders"
+                      to={"/dashboard/assign-riders"}
+                    >
+                      <PiPersonSimpleBikeBold />
+                      <span className="is-drawer-close:hidden">Assign Riders</span>
+                    </NavLink>
+                  </li>
+                </> 
+           }
+              
               {/* List item */}
               <li>
                 <button
