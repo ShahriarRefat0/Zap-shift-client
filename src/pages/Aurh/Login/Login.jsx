@@ -15,10 +15,10 @@ const Login = () => {
   } = useForm();
 
   const handleLogin = (data) => {
-    console.log("data", data);
+   // console.log("data", data);
     singInUser(data.email, data.password)
       .then((res) => {
-        console.log(res.user);
+       // console.log(res.user);
         navigate(location?.state || '/')
       })
       .catch((e) => {
